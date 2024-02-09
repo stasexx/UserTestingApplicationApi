@@ -1,3 +1,4 @@
+using Infrastructure.InfrastructureExtentions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Database;
 using Persistence.PersistenceExtension;
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddServices();
 
 var app = builder.Build();
 
