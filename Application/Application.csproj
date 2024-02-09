@@ -2,8 +2,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
+
+
+
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>

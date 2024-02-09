@@ -6,7 +6,7 @@ public class Option
     
     public string Text { get; set; }
     
-    public int QuestionId { get; set; }
+    public Guid QuestionId { get; set; }
     
     public Question Question { get; set; }
 }
