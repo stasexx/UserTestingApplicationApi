@@ -11,7 +11,7 @@ using Persistence.Database;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240209214007_InitialCreate")]
+    [Migration("20240209233648_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,10 +26,7 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid>("QuestionId1")
+                    b.Property<Guid>("QuestionId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
@@ -38,7 +35,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId1");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Option");
                 });
@@ -128,7 +125,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.Question", "Question")
                         .WithMany("Options")
-                        .HasForeignKey("QuestionId1")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

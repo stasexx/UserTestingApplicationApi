@@ -88,24 +88,23 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
-                    QuestionId = table.Column<int>(type: "INTEGER", nullable: false),
-                    QuestionId1 = table.Column<Guid>(type: "TEXT", nullable: false)
+                    QuestionId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Option", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Option_Question_QuestionId1",
-                        column: x => x.QuestionId1,
+                        name: "FK_Option_Question_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Question",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Option_QuestionId1",
+                name: "IX_Option_QuestionId",
                 table: "Option",
-                column: "QuestionId1");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Question_TestId",
