@@ -2,6 +2,8 @@
 
 public class UserTest
 {
+    public Guid Id { get; set; }
+    
     public bool IsCompleted { get; set; }
     
     public int? Score { get; set; }

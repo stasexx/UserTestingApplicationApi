@@ -6,7 +6,7 @@ public class Question
     
     public string Tittle { get; set; }
     
-    public string[] Options { get; set; }
+    public List<Option> Options { get; set; }
     
     public string Answer { get; set; }
     
