@@ -12,6 +12,7 @@ public static class MapperExtension
         services.AddAutoMapper(Assembly.GetAssembly(typeof(TestProfile)));
         services.AddAutoMapper(Assembly.GetAssembly(typeof(QuestionProfile)));
         services.AddAutoMapper(Assembly.GetAssembly(typeof(OptionProfile)));
+        services.AddAutoMapper(Assembly.GetAssembly(typeof(UserTestProfile)));
 
         return services;
     }

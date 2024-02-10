@@ -6,7 +6,7 @@ public class UserTest
     
     public bool IsCompleted { get; set; }
     
-    public int? Score { get; set; }
+    public double Score { get; set; }
     
     public Guid UserId { get; set; }
     

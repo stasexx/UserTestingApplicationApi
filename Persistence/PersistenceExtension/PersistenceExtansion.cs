@@ -23,6 +23,7 @@ public static class PersistenceExtension
         services.AddScoped<ITestRepository, TestRepository>();
         services.AddScoped<IQuestionRepository, QuestionRepository>();
         services.AddScoped<IOptionRepository, OptionRepository>();
+        services.AddScoped<IUserTestRepository, UserTestRepository>();
         
         return services;
     }
