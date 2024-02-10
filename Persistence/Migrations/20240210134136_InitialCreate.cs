@@ -12,7 +12,7 @@ namespace Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Test",
+                name: "Tests",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -20,11 +20,11 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Test", x => x.Id);
+                    table.PrimaryKey("PK_Tests", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -32,11 +32,11 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Question",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -46,17 +46,37 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Question", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Question_Test_TestId",
+                        name: "FK_Questions_Tests_TestId",
                         column: x => x.TestId,
-                        principalTable: "Test",
+                        principalTable: "Tests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserTest",
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Token = table.Column<string>(type: "TEXT", nullable: false),
+                    ExpiryDateUTC = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserTests",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -67,17 +87,17 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserTest", x => x.Id);
+                    table.PrimaryKey("PK_UserTests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserTest_Test_TestId",
+                        name: "FK_UserTests_Tests_TestId",
                         column: x => x.TestId,
-                        principalTable: "Test",
+                        principalTable: "Tests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserTest_User_UserId",
+                        name: "FK_UserTests_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -94,9 +114,9 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Option", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Option_Question_QuestionId",
+                        name: "FK_Option_Questions_QuestionId",
                         column: x => x.QuestionId,
-                        principalTable: "Question",
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -107,18 +127,23 @@ namespace Persistence.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_TestId",
-                table: "Question",
+                name: "IX_Questions_TestId",
+                table: "Questions",
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserTest_TestId",
-                table: "UserTest",
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserTests_TestId",
+                table: "UserTests",
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserTest_UserId",
-                table: "UserTest",
+                name: "IX_UserTests_UserId",
+                table: "UserTests",
                 column: "UserId");
         }
 
@@ -129,16 +154,19 @@ namespace Persistence.Migrations
                 name: "Option");
 
             migrationBuilder.DropTable(
-                name: "UserTest");
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "UserTests");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Test");
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Tests");
         }
     }
 }

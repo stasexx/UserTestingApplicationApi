@@ -11,7 +11,7 @@ using Persistence.Database;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240209233648_InitialCreate")]
+    [Migration("20240210134136_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -61,7 +61,30 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("Question");
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExpiryDateUTC")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Domain.Entities.Test", b =>
@@ -76,7 +99,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Test");
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -91,7 +114,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserTest", b =>
@@ -118,7 +141,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserTest");
+                    b.ToTable("UserTests");
                 });
 
             modelBuilder.Entity("Domain.Entities.Option", b =>
@@ -141,6 +164,17 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Test");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserTest", b =>

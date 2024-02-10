@@ -1,6 +1,10 @@
-﻿namespace Application.IRepositories;
+﻿using System.Linq.Expressions;
 
-public interface IBaseRepository<T>
+namespace Application.IRepositories;
+
+public interface IBaseRepository<TEntity>
 {
-    Task<T> AddAsync(T entity, CancellationToken cancellationToken);
+    Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken);
+
+    Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
 }

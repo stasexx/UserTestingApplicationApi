@@ -1,5 +1,6 @@
 ﻿using Application.IServices;
 using Application.Models.Dtos;
+using Application.Models.Identity;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,5 +21,12 @@ public class UsersController : BaseController
     {
         var result = await _userService.AddUserAsync(register, cancellationToken);
         return result;
+    }
+    
+    [HttpPost("login")]
+    public async Task<ActionResult<TokensModel>> LoginAsync([FromBody] UserDto login, CancellationToken cancellationToken)
+    {
+        var tokens = await _userService.LoginAsync(login, cancellationToken);
+        return Ok(tokens);
     }
 }

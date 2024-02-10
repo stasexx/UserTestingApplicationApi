@@ -12,10 +12,12 @@ public class DataContext : DbContext
     
     public DbSet<User> Users { get; set; }
     
-    public DbSet<User> Tests { get; set; }
+    public DbSet<Test> Tests { get; set; }
     
-    public DbSet<User> Questions { get; set; }
+    public DbSet<Question> Questions { get; set; }
     
-    public DbSet<User> UserTests { get; set; }
+    public DbSet<UserTest> UserTests { get; set; }
+    
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
     
 }
