@@ -7,5 +7,6 @@ namespace Application.IServices;
 
 public interface ITestService
 {
-    Task<PagedList<TestDto>> GetTestsPages(int pageNumber, int pageSize, CancellationToken cancellationToken);
+    Task<PagedList<TestDto>> GetTestsPages(Guid userId, int pageNumber, int pageSize,
+        CancellationToken cancellationToken);
 }

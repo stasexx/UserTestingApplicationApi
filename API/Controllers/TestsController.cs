@@ -17,11 +17,11 @@ public class TestsController : BaseController
     }
     
     [Authorize]
-    [HttpGet("list")]
-    public async Task<IActionResult> TestsListAsync(int pageNumber, int pageSize,
+    [HttpGet("list/{id}")]
+    public async Task<IActionResult> TestsListAsync(Guid id, int pageNumber, int pageSize,
         CancellationToken cancellationToken)
     {
-        var result = await _testService.GetTestsPages(pageNumber, pageSize, cancellationToken);
+        var result = await _testService.GetTestsPages(id, pageNumber, pageSize, cancellationToken);
         return Ok(result);
     }
     
