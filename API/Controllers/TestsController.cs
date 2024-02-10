@@ -16,7 +16,7 @@ public class TestsController : BaseController
         _testService = testService;
     }
     
-    /*[Authorize]*/
+    [Authorize]
     [HttpGet("list")]
     public async Task<IActionResult> TestsListAsync(int pageNumber, int pageSize,
         CancellationToken cancellationToken)
