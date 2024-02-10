@@ -14,6 +14,8 @@ public static class ServicesExtention
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<ITestService, TestService>();
+        services.AddScoped<IQuestionService, QuestionService>();
+        services.AddScoped<IOptionService, OptionService>();
 
         return services;
     }

@@ -18,7 +18,7 @@ public class TestsController : BaseController
     
     /*[Authorize]*/
     [HttpGet("list")]
-    public async Task<IActionResult> RegisterAsync(int pageNumber, int pageSize,
+    public async Task<IActionResult> TestsListAsync(int pageNumber, int pageSize,
         CancellationToken cancellationToken)
     {
         var result = await _testService.GetTestsPages(pageNumber, pageSize, cancellationToken);

@@ -8,8 +8,6 @@ public class Question
     
     public List<Option> Options { get; set; }
     
-    public string Answer { get; set; }
-    
     public double Value { get; set; }
     
     public Test Test { get; set; }

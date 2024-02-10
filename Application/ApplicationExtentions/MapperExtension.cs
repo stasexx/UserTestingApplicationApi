@@ -10,6 +10,8 @@ public static class MapperExtension
     public static IServiceCollection AddMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(Assembly.GetAssembly(typeof(TestProfile)));
+        services.AddAutoMapper(Assembly.GetAssembly(typeof(QuestionProfile)));
+        services.AddAutoMapper(Assembly.GetAssembly(typeof(OptionProfile)));
 
         return services;
     }
