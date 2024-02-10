@@ -13,6 +13,7 @@ public static class ServicesExtention
     {
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<ITestService, TestService>();
 
         return services;
     }

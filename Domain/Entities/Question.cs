@@ -10,6 +10,8 @@ public class Question
     
     public string Answer { get; set; }
     
+    public double Value { get; set; }
+    
     public Test Test { get; set; }
     
     public Guid TestId { get; set; }

@@ -25,4 +25,26 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
     {
         return await _db.Set<TEntity>().Where(predicate).FirstOrDefaultAsync(cancellationToken);
     }
+    
+    public async Task<List<TEntity>> GetPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    {
+        return await _db.Set<TEntity>()
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<List<TEntity>> GetPageAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+    {
+        return await _db.Set<TEntity>()
+            .Where(predicate)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+    }
+    
+    public async Task<int> GetTotalCountAsync(CancellationToken cancellationToken)
+    {
+        return await _db.Set<TEntity>().CountAsync(cancellationToken);
+    }
 }
