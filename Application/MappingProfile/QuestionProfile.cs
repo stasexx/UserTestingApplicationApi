@@ -10,5 +10,6 @@ public class QuestionProfile : Profile
     {
         CreateMap<Question, QuestionDto>();
         CreateMap<QuestionDto, Question>();
+        CreateMap<QuestionDto, Question>();
     }
 }

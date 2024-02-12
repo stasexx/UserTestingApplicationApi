@@ -27,7 +27,7 @@ public class QuestionsController : BaseController
     public async Task<IActionResult> QuestionsListByTestIdAsync(Guid testId, int pageNumber, int pageSize,
         CancellationToken cancellationToken)
     {
-        var result = await _questionService.GetQuestionsByTestIdPages(testId, pageNumber, pageSize, cancellationToken);
+        var result = await _questionService.GetQuestionsWithOptionsByTestAsync(testId, pageNumber, pageSize, cancellationToken);
         return Ok(result);
     }
 }
