@@ -5,6 +5,7 @@ using Application.IServices;
 using Application.IServices.Identity;
 using Application.Models.Dtos;
 using Application.Models.Identity;
+using AutoMapper;
 using Domain.Entities;
 
 namespace Infrastructure.Services;
@@ -17,14 +18,17 @@ public class UserService : IUserService
 
     private readonly IRefreshTokensRepository _refreshTokensRepository;
 
-    public UserService(IUserRepository? userRepository, ITokenService tokensService, IRefreshTokensRepository refreshTokensRepository)
+    private readonly IMapper _mapper;
+
+    public UserService(IUserRepository? userRepository, ITokenService tokensService, IRefreshTokensRepository refreshTokensRepository, IMapper mapper)
     {
         _userRepository = userRepository;
         _tokensService = tokensService;
         _refreshTokensRepository = refreshTokensRepository;
+        _mapper = mapper;
     }
 
-    public async Task<User> AddUserAsync(UserDto userDto, CancellationToken cancellationToken)
+    public async Task<TokensModel> AddUserAsync(UserLoginDto userDto, CancellationToken cancellationToken)
     {
         try
         {
@@ -39,8 +43,9 @@ public class UserService : IUserService
             await _userRepository.AddAsync(user, cancellationToken);
             
             var refreshToken = await AddRefreshToken(user.Id, cancellationToken);
-            
-            return user;
+            var tokens = GetUserTokens(user, refreshToken);
+
+            return tokens;
             
         }
         catch (Exception e)
@@ -50,14 +55,13 @@ public class UserService : IUserService
         }
     }
     
-    public async Task<TokensModel> LoginAsync(UserDto userDto, CancellationToken cancellationToken)
+    public async Task<TokensModel> LoginAsync(UserLoginDto userDto, CancellationToken cancellationToken)
     {
-
         var user = await  _userRepository.GetOneAsync(u => u.Name == userDto.Name, cancellationToken);
 
         if (user == null)
-        {
-            throw new Exception("User");
+        { 
+            return await AddUserAsync(userDto, cancellationToken);
         }
         
         var refreshToken = await AddRefreshToken(user.Id, cancellationToken);
@@ -67,6 +71,16 @@ public class UserService : IUserService
         return tokens;
     }
     
+    public async Task<UserDto> GetUserAsync(string name, CancellationToken cancellationToken)
+    {
+        var entity = await _userRepository.GetOneAsync(x=>x.Name == name, cancellationToken);
+        if (entity == null)
+        {
+            throw new Exception(name);
+        }
+
+        return _mapper.Map<UserDto>(entity);
+    }
     
     private TokensModel GetUserTokens(User user, RefreshToken refreshToken)
     {

@@ -1,7 +1,6 @@
 ﻿namespace Application.Models.Dtos;
 
-public class UserDto
+public class UserLoginDto
 {
-    public string Id { get; set; }
     public string Name { get; set; }
 }

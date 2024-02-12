@@ -23,14 +23,29 @@ public class TestService : ITestService
     
     public async Task<PagedList<TestDto>> GetTestsPages(Guid userId, int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        var userTests = await _userTestRepository.GetPageAsync(1, 50,
-            x => x.UserId == userId, cancellationToken);
-        var testIds = userTests.Select(ut => ut.TestId).Distinct().ToList();
+        var userTestsPage = await _userTestRepository.GetPageAsync(pageNumber, pageSize, x => x.UserId == userId, cancellationToken);
         
-        var entities = await _testRepository.GetPageAsync(1, testIds.Count, test => testIds.Contains(test.Id), cancellationToken);
+        var testIds = userTestsPage.Select(ut => ut.TestId).Distinct();
+        var tests = await _testRepository.GetPageAsync(pageNumber, pageSize, test => testIds.Contains(test.Id), cancellationToken);
         
-        var dtos = _mapper.Map<List<TestDto>>(entities);
-        var count = await _testRepository.GetTotalCountAsync(cancellationToken);
+        var userTestsMap = userTestsPage.ToDictionary(ut => ut.TestId, ut => ut);
+    
+        var dtos = tests.Select(test =>
+        {
+            var isCompleted = userTestsMap.TryGetValue(test.Id, out var userTest) && userTest.IsCompleted;
+            var score = userTestsMap.TryGetValue(test.Id, out userTest) ? userTest.Score : 0;
+        
+            return new TestDto
+            {
+                Id = test.Id,
+                Name = test.Tittle,
+                IsCompleted = isCompleted,
+                Score = score
+            };
+        }).ToList();
+        
+        var count = userTestsPage.Count;
+    
         return new PagedList<TestDto>(dtos, pageNumber, pageSize, count);
     }
     

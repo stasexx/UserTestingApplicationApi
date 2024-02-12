@@ -6,7 +6,7 @@ namespace Application.IServices;
 
 public interface IUserService
 {
-    Task<User> AddUserAsync(UserDto userDto, CancellationToken cancellationToken);
+    Task<UserDto> GetUserAsync(string name, CancellationToken cancellationToken);
 
-    Task<TokensModel> LoginAsync(UserDto userDto, CancellationToken cancellationToken);
+    Task<TokensModel> LoginAsync(UserLoginDto userDto, CancellationToken cancellationToken);
 }
