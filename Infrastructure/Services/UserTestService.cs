@@ -19,17 +19,6 @@ public class UserTestService : IUserTestService
         _mapper = mapper;
     }
     
-    public async Task<PagedList<UserTestDto>> GetUserTestsByUserIdPages(Guid userId, int pageNumber, int pageSize,
-        CancellationToken cancellationToken)
-    {
-        var entities =
-            await _userTestRepository.GetPageAsync(pageNumber, pageSize, u => u.UserId == userId,
-                cancellationToken);
-        var dtos = _mapper.Map<List<UserTestDto>>(entities);
-        var count = await _userTestRepository.GetTotalCountAsync(cancellationToken);
-        return new PagedList<UserTestDto>(dtos, pageNumber, pageSize, count);
-    }
-
     public async Task<UserTestDto> UpdateTestCompletedStatus(Guid testId, Guid userId, double score,
         CancellationToken cancellationToken)
     {
