@@ -1,5 +1,7 @@
-﻿using Application.IServices;
+﻿using System.Security.Claims;
+using Application.IServices;
 using Application.Models.Dtos;
+using Application.Models.Identity;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +17,17 @@ public class UsersController : BaseController
         _userService = userService;
     }
     
-    [HttpPost("register")]
-    public async Task<User> RegisterAsync([FromBody] UserDto register, CancellationToken cancellationToken)
+    [HttpPost("login")]
+    public async Task<ActionResult<TokensModel>> LoginAsync([FromBody] UserLoginDto login, CancellationToken cancellationToken)
     {
-        var result = await _userService.AddUserAsync(register, cancellationToken);
-        return result;
+        var tokens = await _userService.LoginAsync(login, cancellationToken);
+        return Ok(tokens);
+    }
+    
+    [HttpGet("get")]
+    public async Task<ActionResult<UserDto>> GetUserAsync(CancellationToken cancellationToken)
+    {
+        var user = await _userService.GetUserAsync(User.FindFirstValue(ClaimTypes.Name), cancellationToken);
+        return Ok(user);
     }
 }
