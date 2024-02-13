@@ -18,6 +18,14 @@ public static class ServicesExtention
         services.AddScoped<IQuestionService, QuestionService>();
         services.AddScoped<IOptionService, OptionService>();
         services.AddScoped<IUserTestService, UserTestService>();
+        
+        services.AddCors(opt =>
+        {
+            opt.AddPolicy("CorsPolicy", policy =>
+            {
+                policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            });
+        });
 
         return services;
     }
