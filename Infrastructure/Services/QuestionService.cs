@@ -31,18 +31,6 @@ public class QuestionService : IQuestionService
         return new PagedList<QuestionDto>(dtos, pageNumber, pageSize, count);
     }
     
-    public async Task<PagedList<QuestionDto>> GetQuestionsByTestIdPages(Guid testId, int pageNumber, int pageSize,
-        CancellationToken cancellationToken)
-    {
-        var entities =
-            await _questionRepository.GetPageAsync(pageNumber, pageSize, q => q.TestId == testId,
-                cancellationToken);
-        var dtos = _mapper.Map<List<QuestionDto>>(entities);
-        var count = await _questionRepository.GetTotalCountAsync(cancellationToken);
-        
-        return new PagedList<QuestionDto>(dtos, pageNumber, pageSize, count);
-    }
-    
     public async Task<List<QuestionOptionDto>> GetQuestionsWithOptionsByTestAsync(Guid testId, int pageNumber, int pageSize,
         CancellationToken cancellationToken)
     {
