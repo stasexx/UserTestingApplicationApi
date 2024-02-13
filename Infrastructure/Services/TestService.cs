@@ -38,7 +38,7 @@ public class TestService : ITestService
             return new TestDto
             {
                 Id = test.Id,
-                Name = test.Tittle,
+                Name = test.Title,
                 IsCompleted = isCompleted,
                 Score = score
             };

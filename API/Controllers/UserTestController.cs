@@ -14,11 +14,11 @@ public class UserTestController : BaseController
         _userTestService = userTestService;
     }
     
-    [HttpPut("update/testId={testId}/userId={userId}/status={status}")]
-    public async Task<ActionResult<UserTestDto>> LoginAsync(Guid testId, Guid userId, bool status,
+    [HttpPut("update/testId={testId}/userId={userId}/score={score}/")]
+    public async Task<ActionResult<UserTestDto>> LoginAsync(Guid testId, Guid userId, double score,
         CancellationToken cancellationToken)
     {
-        var userTest = await _userTestService.UpdateTestCompletedStatus(testId, userId, status, cancellationToken);
+        var userTest = await _userTestService.UpdateTestCompletedStatus(testId, userId, score, cancellationToken);
         return Ok(userTest);
     }
     

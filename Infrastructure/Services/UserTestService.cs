@@ -30,9 +30,10 @@ public class UserTestService : IUserTestService
         return new PagedList<UserTestDto>(dtos, pageNumber, pageSize, count);
     }
 
-    public async Task<UserTestDto> UpdateTestCompletedStatus(Guid testId, Guid userId, bool newStatus, CancellationToken cancellationToken)
+    public async Task<UserTestDto> UpdateTestCompletedStatus(Guid testId, Guid userId, double score,
+        CancellationToken cancellationToken)
     {
-        var userTest = await _userTestRepository.UpdateCompletedStatus(testId, userId, newStatus, cancellationToken);
+        var userTest = await _userTestRepository.UpdateCompletedStatus(testId, userId, score, cancellationToken);
 
         if (userTest == null)
         {
