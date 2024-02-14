@@ -17,7 +17,7 @@ public class DataContext : DbContext
     
     public DbSet<Question> Questions { get; set; }
     
-    public DbSet<Option> Options { get; set; }
+    public DbSet<Option> Option { get; set; }
     
     public DbSet<UserTest> UserTests { get; set; }
     

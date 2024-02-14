@@ -40,7 +40,7 @@ public class DbInitializer
             new Option { QuestionId = questions[1].Id, Text = "Option 1", IsCorrect = true },
             new Option { QuestionId = questions[1].Id, Text = "Option 2", IsCorrect = false }
         };
-        context.Options.AddRange(options);
+        context.Option.AddRange(options);
         context.SaveChanges();
         
         var userTests = new List<UserTest>
