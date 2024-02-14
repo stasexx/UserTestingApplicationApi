@@ -1,4 +1,5 @@
 ﻿using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -13,7 +14,7 @@ public class OptionsController : BaseController
         _optionService = optionService;
     }
     
-    /*[Authorize]*/
+    [Authorize]
     [HttpGet("list")]
     public async Task<IActionResult> OptionsListAsync(int pageNumber, int pageSize,
         CancellationToken cancellationToken)
@@ -22,7 +23,7 @@ public class OptionsController : BaseController
         return Ok(result);
     }
     
-    /*[Authorize]*/
+    [Authorize]
     [HttpGet("list/{questionId}")]
     public async Task<IActionResult> OptionsListByTestIdAsync(Guid questionId, int pageNumber, int pageSize,
         CancellationToken cancellationToken)

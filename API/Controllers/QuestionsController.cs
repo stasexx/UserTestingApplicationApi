@@ -1,4 +1,5 @@
 ﻿using Application.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -13,7 +14,7 @@ public class QuestionsController : BaseController
         _questionService = questionService;
     }
     
-    /*[Authorize]*/
+    [Authorize]
     [HttpGet("list")]
     public async Task<IActionResult> QuestionsListAsync(int pageNumber, int pageSize,
         CancellationToken cancellationToken)
@@ -22,7 +23,7 @@ public class QuestionsController : BaseController
         return Ok(result);
     }
     
-    /*[Authorize]*/
+    [Authorize]
     [HttpGet("list/{testId}")]
     public async Task<IActionResult> QuestionsListByTestIdAsync(Guid testId, int pageNumber, int pageSize,
         CancellationToken cancellationToken)
